@@ -2,10 +2,6 @@ import { NavLink } from 'react-router-dom';
 import items from './items';
 import style from './navbar.module.css';
 
-// const getFullName = ({ isActive }) => {
-//   return isActive ? `${style.link} ${style.active}` : `${style.link}`;
-// };
-
 const Navbar = () => {
   const elements = items.map(({ id, text, link }) => (
     <li key={id}>

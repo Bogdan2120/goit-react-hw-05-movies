@@ -7,14 +7,13 @@ import {
 } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
-import PropTypes from 'prop-types';
 
 import { getMoviesDetails } from '../../shared/services/getMovies';
 import poster from '../../img/no-poster-available.webp';
 
 import style from './singleMoviePage.module.css';
 
-const SingleMoviePage = () => {
+const MovieDetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState('');
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
@@ -74,11 +73,4 @@ const SingleMoviePage = () => {
   );
 };
 
-export default SingleMoviePage;
-
-SingleMoviePage.propTypes = {
-  movieDetails: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  handleChange: PropTypes.func,
-  search: PropTypes.string,
-};
+export default MovieDetailsPage;

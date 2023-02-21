@@ -1,15 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
-import PropTypes from 'prop-types';
 
 import { getMoviesAdditionally } from 'shared/services/getMovies';
 
 import noPhoto from 'img/no_photo.jpg';
 
-// import style from './singleMovieCastPage.module.css';
-
-const SingleMovieCastPage = () => {
+const CastPage = () => {
   const [movieDetails, setMovieDetails] = useState('');
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -61,12 +58,4 @@ const SingleMovieCastPage = () => {
   return CastList(movieDetails);
 };
 
-export default SingleMovieCastPage;
-
-SingleMovieCastPage.propTypes = {
-  movieDetails: PropTypes.object,
-  setMovieDetails: PropTypes.func,
-  loading: PropTypes.bool,
-  setLoading: PropTypes.func,
-  id: PropTypes.string,
-};
+export default CastPage;

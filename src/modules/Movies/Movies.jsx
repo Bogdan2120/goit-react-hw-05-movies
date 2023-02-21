@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import MoviesList from 'shared/components/MoviesList';
 import { getMovies } from 'shared/services/getMovies';
@@ -28,7 +27,3 @@ const Movies = () => {
 };
 
 export default Movies;
-
-Movies.propTypes = {
-  items: PropTypes.array,
-};

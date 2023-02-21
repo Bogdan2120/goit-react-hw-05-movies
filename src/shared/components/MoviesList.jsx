@@ -9,7 +9,7 @@ const MoviesList = ({ items }) => {
   const elements = items.map(({ id, title }) => (
     <Link
       key={id}
-      to={`/movies/${id}`}
+      to={`/goit-react-hw-05-movies/movies/${id}`}
       className={style.moviesItem}
       state={{ from: location }}
     >

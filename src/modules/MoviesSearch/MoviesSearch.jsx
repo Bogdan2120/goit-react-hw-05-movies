@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import MoviesSearchForm from './MoviesSearchForm/MoviesSearchForm';
 import MoviesList from 'shared/components/MoviesList';
@@ -45,8 +44,3 @@ const MoviesSearch = () => {
 
 export default MoviesSearch;
 
-MoviesSearch.propTypes = {
-  items: PropTypes.array,
-  onSearchMovies: PropTypes.func,
-  search: PropTypes.string,
-};
