@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import Notiflix from 'notiflix';
 
-import { getMoviesAdditionally } from 'shared/services/getMovies';
+import { getMoviesAdditionally } from 'services/getMovies';
+import ReviewsList from 'modules/ReviewsList/ReviewsList';
 
 const ReviewsPage = () => {
-  const [movieDetails, setMovieDetails] = useState('');
+  const [movieDetails, setMovieDetails] = useState([]);
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
 
@@ -16,6 +17,7 @@ const ReviewsPage = () => {
         const result = await getMoviesAdditionally(id, '/reviews');
         setMovieDetails(result);
       } catch ({ responce }) {
+        Notiflix.Notify.failure('An error occurred');
         console.log(responce.data.message);
       } finally {
         setLoading(false);
@@ -24,28 +26,7 @@ const ReviewsPage = () => {
     fetchMovie();
   }, [id]);
 
-  const ReviewsList = ({ results }) => {
-    if (!results) {
-      return;
-    }
-    if (results.length === 0) {
-      return <p>No one wants to watch this movie &#128528;</p>;
-    }
-
-    const elements = results.map(({ id, author, content }) => (
-      <li key={id}>
-        <p>Author: {author}</p>
-        <p>Reviews: {content}</p>
-      </li>
-    ));
-    return (
-      <ul>
-        {loading ? Loading.standard('Loading...') : Loading.remove()}
-        {elements}
-      </ul>
-    );
-  };
-  return ReviewsList(movieDetails);
+  return <ReviewsList results={movieDetails.results} loading={loading} />;
 };
 
 export default ReviewsPage;

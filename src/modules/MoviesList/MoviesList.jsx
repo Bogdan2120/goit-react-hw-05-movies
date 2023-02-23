@@ -6,14 +6,14 @@ import style from './moviesList.module.css';
 
 const MoviesList = ({ items }) => {
   const location = useLocation();
-  const elements = items.map(({ id, title }) => (
+  const elements = items.map(({ id, title, original_title }) => (
     <Link
       key={id}
-      to={`/goit-react-hw-05-movies/movies/${id}`}
+      to={`/movies/${id}`}
       className={style.moviesItem}
       state={{ from: location }}
     >
-      <li>{title}</li>
+      <li>{title || original_title}</li>
     </Link>
   ));
   return <ul className={style.moviesList}>{elements}</ul>;
@@ -24,8 +24,9 @@ export default memo(MoviesList);
 MoviesList.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string,
+      original_title: PropTypes.string,
     })
   ).isRequired,
 };

@@ -4,12 +4,12 @@ const items = [
   {
     id: nanoid(),
     text: 'Home page',
-    link: '/goit-react-hw-05-movies/',
+    link: '/',
   },
   {
     id: nanoid(),
     text: 'Movies',
-    link: '/goit-react-hw-05-movies/movies',
+    link: '/movies',
   },
 ];
 

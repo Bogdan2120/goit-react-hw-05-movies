@@ -1,26 +1,24 @@
 import { memo } from 'react';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import Notiflix from 'notiflix';
 import style from './moviesSearch.module.css';
 
-const MoviesSearchForm = ({ initialState, onSubmit }) => {
-  const [state, setState] = useState({ search: '' });
-  const handleChange = useCallback(
-    ({ target }) => {
-      const { name, value } = target;
-      setState({ [name]: value });
-    },
-    [setState]
-  );
+const MoviesSearchForm = ({ onSubmit }) => {
+  const [query, setQuerye] = useState('');
+
+  const handleChange = ({ target }) => {
+    const { value } = target;
+    setQuerye(value);
+  };
 
   const handleSubmit = e => {
     e.preventdefault();
-    onSubmit({ ...state });
-    setState({ ...initialState });
+    if (query === '') {
+      return Notiflix.Notify.failure('Enter text and try again');
+    }
+    onSubmit(query);
   };
-
-  const { search } = state;
 
   return (
     <form className={style.form} onSubmit={handleSubmit}>
@@ -28,7 +26,7 @@ const MoviesSearchForm = ({ initialState, onSubmit }) => {
         <label htmlFor="">Search</label>
         <input
           className={style.search_input}
-          value={search}
+          value={query}
           onChange={handleChange}
           name="search"
           placeholder="Search movie"
@@ -44,21 +42,6 @@ const MoviesSearchForm = ({ initialState, onSubmit }) => {
 
 export default memo(MoviesSearchForm);
 
-MoviesSearchForm.defaultProps = {
-  initialState: {
-    search: '',
-  },
-};
-
-MoviesSearchForm.defaultProps = {
-  initialState: { search: '' },
-};
-
 MoviesSearchForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  initialState: PropTypes.shape({
-    search: PropTypes.string,
-  }),
-  handleChange: PropTypes.func,
-  search: PropTypes.string,
 };

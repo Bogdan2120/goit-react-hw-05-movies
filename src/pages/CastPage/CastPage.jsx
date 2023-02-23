@@ -1,13 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import Notiflix from 'notiflix';
 
-import { getMoviesAdditionally } from 'shared/services/getMovies';
-
-import noPhoto from 'img/no_photo.jpg';
+import { getMoviesAdditionally } from 'services/getMovies';
+import CastList from 'modules/CastList/CastList';
 
 const CastPage = () => {
-  const [movieDetails, setMovieDetails] = useState('');
+  const [movieDetails, setMovieDetails] = useState([]);
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
 
@@ -18,6 +17,7 @@ const CastPage = () => {
         const result = await getMoviesAdditionally(id, '/credits');
         setMovieDetails(result);
       } catch ({ responce }) {
+        Notiflix.Notify.failure('An error occurred');
         console.log(responce.data.message);
       } finally {
         setLoading(false);
@@ -26,36 +26,7 @@ const CastPage = () => {
     fetchMovie();
   }, [id]);
 
-  const CastList = ({ cast }) => {
-    if (!cast) {
-      return;
-    }
-    if (cast.length === 0) {
-      return <p>Nobody auditioned for this movie &#128528;</p>;
-    }
-    const elements = cast.map(({ id, profile_path, name, character }) => (
-      <li key={id}>
-        <img
-          alt="actors"
-          width="120px"
-          src={
-            profile_path
-              ? `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${profile_path}`
-              : noPhoto
-          }
-        />
-        <p>Name: {name}</p>
-        <p>Character: {character}</p>
-      </li>
-    ));
-    return (
-      <ul>
-        {loading ? Loading.standard('Loading...') : Loading.remove()}
-        {elements}
-      </ul>
-    );
-  };
-  return CastList(movieDetails);
+  return <CastList cast={movieDetails.cast} loading={loading} />;
 };
 
 export default CastPage;
